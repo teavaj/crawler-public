@@ -1,24 +1,15 @@
-# crawler-public
-
 # Project description
 
-lorem ipsum
+This is a demo of a project I did for a company. The goal was to gather to most links from a specific market and scan through the websites looking for a specific keyword. This project creates such a dataset from the Common Crawl database for further manual tasks.
 
 # Gathering data
 
+Data is fetched from "https://data.commoncrawl.org/" with the requests library. The incoming data goes through a filter process, looking for a specified domain (in this example .com). After additional data cleaning steps the output is a CSV table.
+
 # Crawling and scpraing websites
 
-1. Set-up a new spider
-   1. in terminal run
-      ```bash
-      scrapy startproject crawler_public
-      ```
-2. These changes to setting.py are recommended for a better performance
-   1. USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edg/103.0.1264.77'
-   2. CONCURRENT_REQUESTS = 60
-   3. DOWNLOAD_DELAY = 0
-   4. SCHEDULER_PRIORITY_QUEUE = 'scrapy.pqueues.DownloaderAwarePriorityQueue'
-   5. LOG_LEVEL = 'INFO'
-3. Copy com_domains.csv into the newly created crawler_public directory
-4. cd crawler_public
-5. scrapy crawl public-crawl
+The spider in the project has 2 main steps:
+1. Opens the main domain (the homepage) and looks for internal links like 'privacy policy'
+2. If found, it follows the link and parses the text looking for a keyword (e.g. 'google')
+
+Every link, where such a keyword was found will be writen than in a JSON file.
